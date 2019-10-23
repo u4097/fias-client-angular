@@ -8,7 +8,7 @@ import {Post} from "./post";
 })
 
 export class DataService {
-    searchOption = [];
+    selectedPosts = [];
     public posts: Post[];
     postUrl = "https://jsonplaceholder.typicode.com/posts";
 
@@ -26,9 +26,9 @@ export class DataService {
         const posts = this.posts;
         const filteredPostsList = [];
         for (const post of posts) {
-            for (const options of this.searchOption) {
-                if (options.title === post.title) {
-                    filteredPostsList.push(post);
+            for (const selectedPost of this.selectedPosts) {
+                if (post.title === selectedPost.title) {
+                    filteredPostsList.push(selectedPost);
                 }
             }
         }

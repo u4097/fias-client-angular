@@ -23,7 +23,7 @@ export class HomePageComponent implements OnInit {
     }
 
     onSelectedPost() {
-        if (this.dataService.searchOption.length > 0) {
+        if (this.dataService.selectedPosts.length > 0) {
             this.posts = this.dataService.filterPosts();
         } else {
             this.posts = this.dataService.posts;

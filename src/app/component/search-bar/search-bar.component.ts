@@ -50,21 +50,21 @@ export class SearchBarComponent implements OnInit {
     filterSelectedPostList(event) {
         const posts = event.source.value;
         if (!posts) {
-            this.dataService.searchOption = []
+            this.dataService.selectedPosts = []
         } else {
-            this.dataService.searchOption.push(posts);
-            this.onSelectedOption.emit(this.dataService.searchOption)
+            this.dataService.selectedPosts.push(posts);
+            this.onSelectedOption.emit(this.dataService.selectedPosts)
         }
 
         this.focusOnPlaceInput();
     }
 
     removeChips(option) {
-        let index = this.dataService.searchOption.indexOf(option);
+        let index = this.dataService.selectedPosts.indexOf(option);
         if (index >= 0)
-            this.dataService.searchOption.splice(index, 1);
+            this.dataService.selectedPosts.splice(index, 1);
         this.focusOnPlaceInput();
-        this.onSelectedOption.emit(this.dataService.searchOption);
+        this.onSelectedOption.emit(this.dataService.selectedPosts);
     }
 
     focusOnPlaceInput() {
@@ -72,8 +72,4 @@ export class SearchBarComponent implements OnInit {
         this.autocompleteInput.nativeElement.value = '';
     }
 
-    displayFn(post: Post) {
-        let k = post ? post.title : post;
-        return k;
-    }
 }
