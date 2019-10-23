@@ -1,0 +1,10 @@
+<div style="margin: auto; width: 70%; margin-top: 30%;">
+    <app-search-bar (onSelectedOption)="onSelectedPost()"></app-search-bar>
+</div>
+
+<h2 style="text-align: center">Data</h2>
+<div *ngFor="let post of posts" class="group">
+    <p><b>Item :</b>{{ post.id }}</p>
+    <p><b>Title :</b>{{ post.title }}</p>
+    <p><b>Body :</b>{{ post.body }}</p>
+</div>
