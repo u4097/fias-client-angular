@@ -26,11 +26,17 @@ export type Address = {
 export type Query = {
    __typename?: 'Query',
   addressById?: Maybe<Address>,
+  addressByGuid?: Maybe<Array<Maybe<Address>>>,
 };
 
 
 export type QueryAddressByIdArgs = {
   aoId?: Maybe<Scalars['String']>
+};
+
+
+export type QueryAddressByGuidArgs = {
+  aoGuid?: Maybe<Scalars['String']>
 };
 
 export type AddressByIdQueryVariables = {
@@ -44,6 +50,19 @@ export type AddressByIdQuery = (
     { __typename?: 'Address' }
     & Pick<Address, 'id' | 'aoId' | 'aoGuid' | 'offName' | 'shortName'>
   )> }
+);
+
+export type AddressByGuidQueryVariables = {
+  aoGuid?: Maybe<Scalars['String']>
+};
+
+
+export type AddressByGuidQuery = (
+  { __typename?: 'Query' }
+  & { addressByGuid: Maybe<Array<Maybe<(
+    { __typename?: 'Address' }
+    & Pick<Address, 'id' | 'aoId' | 'aoGuid' | 'offName' | 'shortName'>
+  )>>> }
 );
 
 
@@ -64,5 +83,24 @@ export const AddressByIdDocument = gql`
   })
   export class AddressByIdGQL extends Apollo.Query<AddressByIdQuery, AddressByIdQueryVariables> {
     document = AddressByIdDocument;
+    
+  }
+export const AddressByGuidDocument = gql`
+    query AddressByGuid($aoGuid: String) {
+  addressByGuid(aoGuid: $aoGuid) {
+    id
+    aoId
+    aoGuid
+    offName
+    shortName
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AddressByGuidGQL extends Apollo.Query<AddressByGuidQuery, AddressByGuidQueryVariables> {
+    document = AddressByGuidDocument;
     
   }

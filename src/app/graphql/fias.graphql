@@ -8,3 +8,13 @@ query AddressById($aoId:String)  {
 	}
 }
 
+query AddressByGuid($aoGuid:String)  {
+	addressByGuid(aoGuid:$aoGuid){
+		id
+		aoId
+		aoGuid
+		offName
+		shortName
+	}
+}
+
