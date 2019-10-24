@@ -4,7 +4,8 @@ import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 
 import gql from 'graphql-tag';
-import {PostByIdGQL, UserByIdGQL} from "../generated/graphql";
+import {AddressByIdGQL} from "../generated/graphql";
+// import {PostByIdGQL, UserByIdGQL} from "../generated/graphql";
 
 type User = {
     id: string;
@@ -28,12 +29,12 @@ type Query = {
     user(id: number): User;
 }
 
-type Variables = {
-    id: number;
-}
-
-type Response = {
-    user: User;
+type AddressById = {
+    id?: string;
+    aoId?: string;
+    aoGuid?: string;
+    offName?: string;
+    shortName?: string;
 }
 
 
@@ -46,15 +47,16 @@ export class ListComponent implements OnInit {
     users: Observable<User[]>;
     user: User;
     post: Post;
+    address: AddressById;
 
     constructor(private apollo: Apollo,
-                private userGQL: UserByIdGQL,
-                private  postGQL: PostByIdGQL
+                private addressGQL: AddressByIdGQL
     ) {
 
     }
 
     ngOnInit() {
+/*
         this.users = this.apollo.watchQuery<Query>({
             query: gql`
                 query users {
@@ -69,28 +71,16 @@ export class ListComponent implements OnInit {
         .valueChanges
         .pipe(map(result => result.data.users));
 
+*/
 
-        /*
-                 this.apollo.watchQuery<Response, Variables>({
-                          query: gql`
-                               query user($id: ID!){
-                           user(id:$id) {
-                           id
-                           firstname
-                               age
-                          }
-                      }
-                    `,
-                    variables: {
-                        id:1,
-                    },
-                })
-                .valueChanges.subscribe(({data}) => {
-                this.user = data.user;
-                console.log(this.user.firstname);
-                  });
-        */
+        this.addressGQL.watch({aoId: "4b9549bc-2965-4c81-aca8-1d3d1c60870d"})
+            .valueChanges
+            .subscribe(({data}) => {
+                this.address = data.addressById;
+                console.log(this.address.offName);
+            });
 
+/*
         this.userGQL.watch({id: "3"})
             .valueChanges
             .subscribe(({data}) => {
@@ -106,6 +96,7 @@ export class ListComponent implements OnInit {
                 console.log(this.post.comments.pop()
                 );
             });
+*/
 
     }
 

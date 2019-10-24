@@ -1,0 +1,10 @@
+query AddressById($aoId:String)  {
+	addressById(aoId:$aoId){
+	  id
+	  aoId
+	  aoGuid
+	  offName
+	  shortName
+	}
+}
+

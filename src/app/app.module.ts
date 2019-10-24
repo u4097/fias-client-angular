@@ -46,7 +46,7 @@ import { ListComponent } from './list/list.component';
 export class AppModule {
 	constructor(apollo: Apollo, httpLink: HttpLink) {
     apollo.create({
-      link: httpLink.create({uri: 'https://fakeql.com/graphql/6a0cde06cbd0e6402cc1ad1ea75ea789'}),
+      link: httpLink.create({uri: 'http://localhost:8080/graphql'}),
       cache: new InMemoryCache()
     });
   }
