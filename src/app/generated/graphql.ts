@@ -15,7 +15,16 @@ export type Scalars = {
   DateTime: any,
 };
 
+
+
+
+
+
+
+
+
 export type _Entity = User | Post | Comment;
+
 
 export type _Service = {
    __typename?: '_Service',
@@ -595,6 +604,26 @@ export type UserByIdQuery = (
   )> }
 );
 
+export type PostByIdQueryVariables = {
+  id: Scalars['ID']
+};
+
+
+export type PostByIdQuery = (
+  { __typename?: 'Query' }
+  & { post: Maybe<(
+    { __typename?: 'Post' }
+    & Pick<Post, 'id'>
+    & { user: (
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'firstname' | 'age'>
+    ), comments: Maybe<Array<Maybe<(
+      { __typename?: 'Comment' }
+      & Pick<Comment, 'id' | 'text'>
+    )>>> }
+  )> }
+);
+
 
 export const UserByIdDocument = gql`
     query UserById($id: ID!) {
@@ -611,5 +640,29 @@ export const UserByIdDocument = gql`
   })
   export class UserByIdGQL extends Apollo.Query<UserByIdQuery, UserByIdQueryVariables> {
     document = UserByIdDocument;
+    
+  }
+export const PostByIdDocument = gql`
+    query PostById($id: ID!) {
+  post(id: $id) {
+    id
+    user {
+      id
+      firstname
+      age
+    }
+    comments {
+      id
+      text
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class PostByIdGQL extends Apollo.Query<PostByIdQuery, PostByIdQueryVariables> {
+    document = PostByIdDocument;
     
   }
