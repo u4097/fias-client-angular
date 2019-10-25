@@ -8,8 +8,7 @@ import {map} from "rxjs/operators";
 @Injectable({
     providedIn: 'root'
 })
-
-export class DataService {
+export  class DataService {
     addresses: Address[];
     public selectedAddresses = [];
 

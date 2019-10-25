@@ -18,7 +18,7 @@ export class SearchBarComponent implements OnInit {
     @Output() onSelectedOption = new EventEmitter();
 
     constructor(
-        private dataService: DataService
+        public dataService: DataService
     ) {
     }
 
