@@ -3,6 +3,7 @@ import {FormControl} from "@angular/forms";
 import {DataService} from "../../data.service";
 import {Address} from "../domain/fiasDataTypes";
 import {filter, map} from "rxjs/operators";
+import {Observable} from "apollo-client/util/Observable";
 
 @Component({
     selector: 'app-search-bar',
@@ -41,7 +42,6 @@ export class SearchBarComponent implements OnInit {
         if (input === '' || input === null) {
             return [];
         }
-
 
         return input ? this.allAddress.filter(s => s.offName.toLowerCase().indexOf(input.toLowerCase()) != -1)
             : this.allAddress;

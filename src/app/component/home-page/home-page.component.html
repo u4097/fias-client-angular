@@ -2,10 +2,13 @@
     <app-search-bar (onSelectedOption)="onSelectedPost()"></app-search-bar>
 </div>
 
-<h2 style="text-align: center">Data</h2>
 <div *ngFor="let address of addresses" class="group">
     <p><b>Регион : </b>{{ address.regionCode }}</p>
-    <p><b>Название : </b>{{ address.offName }}</p>
     <p><b>Сокр.назв. : </b>{{ address.shortName }}</p>
+    <p><b>Название : </b>{{ address.offName }}</p>
+    <p><b>Уровень адр.объекта : </b>{{ address.aoLevel }}</p>
+    <p><b>Код города : </b>{{ address.cityCode }}</p>
+    <p><b>Код нас.пункта : </b>{{ address.placeCode }}</p>
+    <p><b>Код улицы : </b>{{ address.cityCode }}</p>
     <p><b>GUID :</b>{{ address.aoGuid }}</p>
 </div>

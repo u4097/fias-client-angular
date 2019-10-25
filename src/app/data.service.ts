@@ -15,7 +15,7 @@ export  class DataService {
     constructor(
         private http: HttpClient,
         private findByRegion:FindByRegionGQL,
-        private findByShortOffLive:FindByShortOffLiveGQL
+        public findByShortOffLive:FindByShortOffLiveGQL
 ) {
     }
 
@@ -29,6 +29,9 @@ export  class DataService {
                 map(res => res.data.findByShortNameOffNameLiveStatus)
             )
     }
+
+
+
 
     filterAddresses() {
         const addresses = this.addresses;

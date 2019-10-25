@@ -37,6 +37,7 @@ query AddressByOffNameAndLiveStatus($offName:String, $liveStatus:String) {
         offName
         shortName
         liveStatus
+        cityCode
     }
 }
 
@@ -50,6 +51,9 @@ query FindByShortOffLive($shortName:String, $offName:String, $liveStatus:String)
         shortName
         liveStatus
         regionCode
+        cityCode
+        aoLevel
+        placeCode
     }
 }
 
@@ -63,5 +67,9 @@ query FindByRegion($regionCode:String, $shortName:String, $offName:String, $live
         shortName
         liveStatus
         regionCode
+        cityCode
+        aoLevel
+        placeCode
     }
 }
+

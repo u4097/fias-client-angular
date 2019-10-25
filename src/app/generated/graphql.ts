@@ -23,6 +23,9 @@ export type Address = {
   shortName?: Maybe<Scalars['String']>,
   liveStatus?: Maybe<Scalars['String']>,
   regionCode?: Maybe<Scalars['String']>,
+  cityCode?: Maybe<Scalars['String']>,
+  aoLevel?: Maybe<Scalars['String']>,
+  placeCode?: Maybe<Scalars['String']>,
 };
 
 export type Query = {
@@ -33,6 +36,7 @@ export type Query = {
   addressByOffNameAndLiveStatus?: Maybe<Array<Maybe<Address>>>,
   findByShortNameOffNameLiveStatus?: Maybe<Array<Maybe<Address>>>,
   findByRegionCodeAndShortNameAndOffNameAndLiveStatus?: Maybe<Array<Maybe<Address>>>,
+  findByCityCodeAndRegionCodeAndShortNameAndOffNameAndLiveStatus?: Maybe<Array<Maybe<Address>>>,
 };
 
 
@@ -65,6 +69,15 @@ export type QueryFindByShortNameOffNameLiveStatusArgs = {
 
 
 export type QueryFindByRegionCodeAndShortNameAndOffNameAndLiveStatusArgs = {
+  regionCode?: Maybe<Scalars['String']>,
+  shortName?: Maybe<Scalars['String']>,
+  offName?: Maybe<Scalars['String']>,
+  liveStatus?: Maybe<Scalars['String']>
+};
+
+
+export type QueryFindByCityCodeAndRegionCodeAndShortNameAndOffNameAndLiveStatusArgs = {
+  cityCode?: Maybe<Scalars['String']>,
   regionCode?: Maybe<Scalars['String']>,
   shortName?: Maybe<Scalars['String']>,
   offName?: Maybe<Scalars['String']>,
@@ -120,7 +133,7 @@ export type AddressByOffNameAndLiveStatusQuery = (
   { __typename?: 'Query' }
   & { addressByOffNameAndLiveStatus: Maybe<Array<Maybe<(
     { __typename?: 'Address' }
-    & Pick<Address, 'id' | 'aoId' | 'aoGuid' | 'offName' | 'shortName' | 'liveStatus'>
+    & Pick<Address, 'id' | 'aoId' | 'aoGuid' | 'offName' | 'shortName' | 'liveStatus' | 'cityCode'>
   )>>> }
 );
 
@@ -135,7 +148,7 @@ export type FindByShortOffLiveQuery = (
   { __typename?: 'Query' }
   & { findByShortNameOffNameLiveStatus: Maybe<Array<Maybe<(
     { __typename?: 'Address' }
-    & Pick<Address, 'id' | 'aoId' | 'aoGuid' | 'offName' | 'shortName' | 'liveStatus' | 'regionCode'>
+    & Pick<Address, 'id' | 'aoId' | 'aoGuid' | 'offName' | 'shortName' | 'liveStatus' | 'regionCode' | 'cityCode' | 'aoLevel' | 'placeCode'>
   )>>> }
 );
 
@@ -151,7 +164,7 @@ export type FindByRegionQuery = (
   { __typename?: 'Query' }
   & { findByRegionCodeAndShortNameAndOffNameAndLiveStatus: Maybe<Array<Maybe<(
     { __typename?: 'Address' }
-    & Pick<Address, 'id' | 'aoId' | 'aoGuid' | 'offName' | 'shortName' | 'liveStatus' | 'regionCode'>
+    & Pick<Address, 'id' | 'aoId' | 'aoGuid' | 'offName' | 'shortName' | 'liveStatus' | 'regionCode' | 'cityCode' | 'aoLevel' | 'placeCode'>
   )>>> }
 );
 
@@ -222,6 +235,7 @@ export const AddressByOffNameAndLiveStatusDocument = gql`
     offName
     shortName
     liveStatus
+    cityCode
   }
 }
     `;
@@ -243,6 +257,9 @@ export const FindByShortOffLiveDocument = gql`
     shortName
     liveStatus
     regionCode
+    cityCode
+    aoLevel
+    placeCode
   }
 }
     `;
@@ -264,6 +281,9 @@ export const FindByRegionDocument = gql`
     shortName
     liveStatus
     regionCode
+    cityCode
+    aoLevel
+    placeCode
   }
 }
     `;

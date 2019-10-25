@@ -6,4 +6,7 @@ export  type Address = {
     shortName?: string;
     liveStatus?: string;
     regionCode?:string;
+    cityCode?:string;
+    aoLevel?: string
+    placeCode?: string
 }
