@@ -1,7 +1,7 @@
 import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {FormControl} from "@angular/forms";
 import {DataService} from "../../data.service";
-import {Post} from "../../post";
+import {Address} from "../domain/fiasDataTypes";
 
 @Component({
     selector: 'app-search-bar',
@@ -10,7 +10,7 @@ import {Post} from "../../post";
 })
 export class SearchBarComponent implements OnInit {
     myControl = new FormControl();
-    allPosts: Post[];
+    allAddress: Address[];
     autoCompleteList: any[];
 
     @ViewChild('autocompleteInput', null) autocompleteInput: ElementRef;
@@ -22,19 +22,18 @@ export class SearchBarComponent implements OnInit {
     }
 
     ngOnInit() {
-        // get all posts
-        this.dataService.getPosts().subscribe(posts => {
-            this.allPosts = posts;
+        this.dataService.getAddress().subscribe(addr => {
+            this.allAddress = addr;
         });
 
         // when user types something in input, the value changes will through this
         this.myControl.valueChanges.subscribe(input => {
-            this.autoCompleteList = this.filterPostsOnType(input)
+            this.autoCompleteList = this.filterAddressesOnType(input)
         })
     }
 
 
-    filterPostsOnType(input) {
+    filterAddressesOnType(input) {
         if (typeof input != "string") {
             return [];
         }
@@ -42,29 +41,29 @@ export class SearchBarComponent implements OnInit {
             return [];
         }
 
-        return input ? this.allPosts.filter(s => s.title.toLowerCase().indexOf(input.toLowerCase()) != -1)
-            : this.allPosts;
+        return input ? this.allAddress.filter(s => s.offName.toLowerCase().indexOf(input.toLowerCase()) != -1)
+            : this.allAddress;
     }
 
 
-    filterSelectedPostList(event) {
-        const posts = event.source.value;
-        if (!posts) {
-            this.dataService.selectedPosts = []
+    filterSelectedAddressList(event) {
+        const address = event.source.value;
+        if (!address) {
+            this.dataService.selectedAddresses = []
         } else {
-            this.dataService.selectedPosts.push(posts);
-            this.onSelectedOption.emit(this.dataService.selectedPosts)
+            this.dataService.selectedAddresses.push(address);
+            this.onSelectedOption.emit(this.dataService.selectedAddresses)
         }
 
         this.focusOnPlaceInput();
     }
 
     removeChips(option) {
-        let index = this.dataService.selectedPosts.indexOf(option);
+        let index = this.dataService.selectedAddresses.indexOf(option);
         if (index >= 0)
-            this.dataService.selectedPosts.splice(index, 1);
+            this.dataService.selectedAddresses.splice(index, 1);
         this.focusOnPlaceInput();
-        this.onSelectedOption.emit(this.dataService.selectedPosts);
+        this.onSelectedOption.emit(this.dataService.selectedAddresses);
     }
 
     focusOnPlaceInput() {

@@ -1,37 +1,62 @@
 import {Injectable} from '@angular/core';
 import {Observable} from "rxjs";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Post} from "./post";
+import {HttpClient} from "@angular/common/http";
+import {FindByShortNameOffNameLiveStatusGQL} from "./generated/graphql";
+import {Address} from "./component/domain/fiasDataTypes";
+import {map} from "rxjs/operators";
 
 @Injectable({
     providedIn: 'root'
 })
 
 export class DataService {
-    selectedPosts = [];
-    public posts: Post[];
-    postUrl = "https://jsonplaceholder.typicode.com/posts";
+    addresses: Address[];
+    public selectedAddresses = [];
+
+    // postUrl = "https://jsonplaceholder.typicode.com/posts";
 
     constructor(
-        private http: HttpClient
+        private http: HttpClient,
+        private addressShortNameOffNameAndLiveStatus: FindByShortNameOffNameLiveStatusGQL
     ) {
     }
 
-    getPosts(): Observable<Post[]> {
-        return this.http.get<Post[]>(this.postUrl);
+    getAddress(): Observable<Address[]> {
+        return this.addressShortNameOffNameAndLiveStatus.watch({
+            shortName: "г",
+            offName: "Санкт-Петербург",
+            liveStatus: "1"
+        })
+            .valueChanges.pipe(
+                map(res => res.data.findByShortNameOffNameLiveStatus)
+            )
     }
 
-
-    filterPosts() {
-        const posts = this.posts;
-        const filteredPostsList = [];
-        for (const post of posts) {
-            for (const selectedPost of this.selectedPosts) {
-                if (post.title === selectedPost.title) {
-                    filteredPostsList.push(selectedPost);
+    filterAddresses() {
+        const addresses = this.addresses;
+        const filteredAddressList = [];
+        for (const address of addresses) {
+            for (const selectedAddress of this.selectedAddresses) {
+                if (address.offName === selectedAddress.offName) {
+                    filteredAddressList.push(selectedAddress);
                 }
             }
         }
-        return filteredPostsList;
+        return filteredAddressList;
     }
+
+    /*
+        filterPosts() {
+            const posts = this.posts;
+            const filteredPostsList = [];
+            for (const post of posts) {
+                for (const selectedPost of this.selectedPosts) {
+                    if (post.title === selectedPost.title) {
+                        filteredPostsList.push(selectedPost);
+                    }
+                }
+            }
+            return filteredPostsList;
+        }
+    */
 }

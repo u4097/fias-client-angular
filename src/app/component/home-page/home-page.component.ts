@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Post} from "../../post";
 import {DataService} from "../../data.service";
+import {Address} from "../domain/fiasDataTypes";
 
 @Component({
     selector: 'app-home-page',
@@ -8,7 +9,7 @@ import {DataService} from "../../data.service";
     styleUrls: ['./home-page.component.css']
 })
 export class HomePageComponent implements OnInit {
-    posts: Post[];
+    addresses: Address[];
 
     constructor(
         private dataService: DataService
@@ -16,17 +17,19 @@ export class HomePageComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.dataService.getPosts().subscribe(posts => {
-            this.posts = posts;
-            this.dataService.posts = this.posts
+
+        this.dataService.getAddress().subscribe(addresses => {
+            this.addresses = addresses;
+            this.dataService.addresses = this.addresses;
         });
     }
 
     onSelectedPost() {
-        if (this.dataService.selectedPosts.length > 0) {
-            this.posts = this.dataService.filterPosts();
+
+        if (this.dataService.selectedAddresses.length > 0) {
+            this.addresses = this.dataService.filterAddresses();
         } else {
-            this.posts = this.dataService.posts;
+            this.addresses = this.dataService.addresses;
         }
     }
 

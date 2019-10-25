@@ -1,25 +1,15 @@
 import {Component, OnInit} from '@angular/core';
-import {Apollo} from 'apollo-angular';
 import {Observable} from 'rxjs';
 
 import {
     AddressByGuidGQL,
     AddressByIdGQL,
     AddressByOffNameAndLiveStatusGQL,
-    AddressByOffNameGQL, FindByShortNameOffNameLiveStatusGQL, FindByShortNameOffNameLiveStatusQuery
+    AddressByOffNameGQL,
+    FindByShortNameOffNameLiveStatusGQL
 } from "../generated/graphql";
-import {ApolloQueryResult} from "apollo-client";
 import {map} from "rxjs/operators";
-
-
-type Address = {
-    id?: string;
-    aoId?: string;
-    aoGuid?: string;
-    offName?: string;
-    shortName?: string;
-    liveStatus?: string;
-}
+import {Address} from "../component/domain/fiasDataTypes";
 
 
 @Component({
@@ -30,17 +20,18 @@ type Address = {
 export class ListComponent implements OnInit {
     address: Observable<Address[]>;
 
-    constructor(private apollo: Apollo,
+    constructor(
+                // private apollo: Apollo,
                 private addressGQL: AddressByIdGQL,
                 private addressByGuid: AddressByGuidGQL,
                 private addressByName: AddressByOffNameGQL,
                 private addressByNameAndLiveStatus: AddressByOffNameAndLiveStatusGQL,
                 private addressShortNameOffNameAndLiveStatus: FindByShortNameOffNameLiveStatusGQL
-) {
+    ) {
 
-}
+    }
 
-ngOnInit() {
+    ngOnInit() {
 
         /*
                 this.addressGQL.watch({aoId: "4b9549bc-2965-4c81-aca8-1d3d1c60870d"})
@@ -62,27 +53,31 @@ ngOnInit() {
                     });
         */
 
-/*
-        this.addressByName.watch({offName: "Саранск"})
-            .valueChanges
-            .subscribe(({data}) => {
-                this.address = data.addressByOffName
-                console.log(this.address.pop());
-            });
-*/
+        /*
+                this.addressByName.watch({offName: "Саранск"})
+                    .valueChanges
+                    .subscribe(({data}) => {
+                        this.address = data.addressByOffName
+                        console.log(this.address.pop());
+                    });
+        */
 
-/*
-        this.addressByNameAndLiveStatus.watch({offName: "Москва", liveStatus: "1"})
-            .valueChanges
-            .subscribe(({data}) => {
-                this.address = data.addressByOffNameAndLiveStatus
-                console.log(this.address.pop());
-            });
-*/
+        /*
+                this.addressByNameAndLiveStatus.watch({offName: "Москва", liveStatus: "1"})
+                    .valueChanges
+                    .subscribe(({data}) => {
+                        this.address = data.addressByOffNameAndLiveStatus
+                        console.log(this.address.pop());
+                    });
+        */
 
-        this.address = this.addressShortNameOffNameAndLiveStatus.watch({shortName:"г", offName: "Санкт-Петербург", liveStatus: "1"})
+        this.address = this.addressShortNameOffNameAndLiveStatus.watch({
+            shortName: "г",
+            offName: "Санкт-Петербург",
+            liveStatus: "1"
+        })
             .valueChanges.pipe(
-                map(res=> res.data.findByShortNameOffNameLiveStatus)
+                map(res => res.data.findByShortNameOffNameLiveStatus)
             )
     }
 }
