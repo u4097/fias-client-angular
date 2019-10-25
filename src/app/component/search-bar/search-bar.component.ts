@@ -42,6 +42,7 @@ export class SearchBarComponent implements OnInit {
             return [];
         }
 
+
         return input ? this.allAddress.filter(s => s.offName.toLowerCase().indexOf(input.toLowerCase()) != -1)
             : this.allAddress;
 
