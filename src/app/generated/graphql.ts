@@ -21,12 +21,16 @@ export type Address = {
   aoGuid?: Maybe<Scalars['String']>,
   offName?: Maybe<Scalars['String']>,
   shortName?: Maybe<Scalars['String']>,
+  liveStatus?: Maybe<Scalars['String']>,
 };
 
 export type Query = {
    __typename?: 'Query',
   addressById?: Maybe<Address>,
   addressByGuid?: Maybe<Array<Maybe<Address>>>,
+  addressByOffName?: Maybe<Array<Maybe<Address>>>,
+  addressByOffNameAndLiveStatus?: Maybe<Array<Maybe<Address>>>,
+  findByShortNameOffNameLiveStatus?: Maybe<Array<Maybe<Address>>>,
 };
 
 
@@ -37,6 +41,24 @@ export type QueryAddressByIdArgs = {
 
 export type QueryAddressByGuidArgs = {
   aoGuid?: Maybe<Scalars['String']>
+};
+
+
+export type QueryAddressByOffNameArgs = {
+  offName?: Maybe<Scalars['String']>
+};
+
+
+export type QueryAddressByOffNameAndLiveStatusArgs = {
+  offName?: Maybe<Scalars['String']>,
+  liveStatus?: Maybe<Scalars['String']>
+};
+
+
+export type QueryFindByShortNameOffNameLiveStatusArgs = {
+  shortName?: Maybe<Scalars['String']>,
+  offName?: Maybe<Scalars['String']>,
+  liveStatus?: Maybe<Scalars['String']>
 };
 
 export type AddressByIdQueryVariables = {
@@ -62,6 +84,48 @@ export type AddressByGuidQuery = (
   & { addressByGuid: Maybe<Array<Maybe<(
     { __typename?: 'Address' }
     & Pick<Address, 'id' | 'aoId' | 'aoGuid' | 'offName' | 'shortName'>
+  )>>> }
+);
+
+export type AddressByOffNameQueryVariables = {
+  offName?: Maybe<Scalars['String']>
+};
+
+
+export type AddressByOffNameQuery = (
+  { __typename?: 'Query' }
+  & { addressByOffName: Maybe<Array<Maybe<(
+    { __typename?: 'Address' }
+    & Pick<Address, 'id' | 'aoId' | 'aoGuid' | 'offName' | 'shortName'>
+  )>>> }
+);
+
+export type AddressByOffNameAndLiveStatusQueryVariables = {
+  offName?: Maybe<Scalars['String']>,
+  liveStatus?: Maybe<Scalars['String']>
+};
+
+
+export type AddressByOffNameAndLiveStatusQuery = (
+  { __typename?: 'Query' }
+  & { addressByOffNameAndLiveStatus: Maybe<Array<Maybe<(
+    { __typename?: 'Address' }
+    & Pick<Address, 'id' | 'aoId' | 'aoGuid' | 'offName' | 'shortName' | 'liveStatus'>
+  )>>> }
+);
+
+export type FindByShortNameOffNameLiveStatusQueryVariables = {
+  shortName?: Maybe<Scalars['String']>,
+  offName?: Maybe<Scalars['String']>,
+  liveStatus?: Maybe<Scalars['String']>
+};
+
+
+export type FindByShortNameOffNameLiveStatusQuery = (
+  { __typename?: 'Query' }
+  & { findByShortNameOffNameLiveStatus: Maybe<Array<Maybe<(
+    { __typename?: 'Address' }
+    & Pick<Address, 'id' | 'aoId' | 'aoGuid' | 'offName' | 'shortName' | 'liveStatus'>
   )>>> }
 );
 
@@ -102,5 +166,64 @@ export const AddressByGuidDocument = gql`
   })
   export class AddressByGuidGQL extends Apollo.Query<AddressByGuidQuery, AddressByGuidQueryVariables> {
     document = AddressByGuidDocument;
+    
+  }
+export const AddressByOffNameDocument = gql`
+    query AddressByOffName($offName: String) {
+  addressByOffName(offName: $offName) {
+    id
+    aoId
+    aoGuid
+    offName
+    shortName
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AddressByOffNameGQL extends Apollo.Query<AddressByOffNameQuery, AddressByOffNameQueryVariables> {
+    document = AddressByOffNameDocument;
+    
+  }
+export const AddressByOffNameAndLiveStatusDocument = gql`
+    query AddressByOffNameAndLiveStatus($offName: String, $liveStatus: String) {
+  addressByOffNameAndLiveStatus(offName: $offName, liveStatus: $liveStatus) {
+    id
+    aoId
+    aoGuid
+    offName
+    shortName
+    liveStatus
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AddressByOffNameAndLiveStatusGQL extends Apollo.Query<AddressByOffNameAndLiveStatusQuery, AddressByOffNameAndLiveStatusQueryVariables> {
+    document = AddressByOffNameAndLiveStatusDocument;
+    
+  }
+export const FindByShortNameOffNameLiveStatusDocument = gql`
+    query FindByShortNameOffNameLiveStatus($shortName: String, $offName: String, $liveStatus: String) {
+  findByShortNameOffNameLiveStatus(shortName: $shortName, offName: $offName, liveStatus: $liveStatus) {
+    id
+    aoId
+    aoGuid
+    offName
+    shortName
+    liveStatus
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class FindByShortNameOffNameLiveStatusGQL extends Apollo.Query<FindByShortNameOffNameLiveStatusQuery, FindByShortNameOffNameLiveStatusQueryVariables> {
+    document = FindByShortNameOffNameLiveStatusDocument;
     
   }

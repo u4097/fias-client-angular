@@ -1,20 +1,53 @@
 query AddressById($aoId:String)  {
-	addressById(aoId:$aoId){
-	  id
-	  aoId
-	  aoGuid
-	  offName
-	  shortName
-	}
+    addressById(aoId:$aoId){
+        id
+        aoId
+        aoGuid
+        offName
+        shortName
+    }
 }
 
 query AddressByGuid($aoGuid:String)  {
-	addressByGuid(aoGuid:$aoGuid){
-		id
-		aoId
-		aoGuid
-		offName
-		shortName
-	}
+    addressByGuid(aoGuid:$aoGuid){
+        id
+        aoId
+        aoGuid
+        offName
+        shortName
+    }
 }
 
+query AddressByOffName($offName:String) {
+    addressByOffName(offName:$offName){
+        id
+        aoId
+        aoGuid
+        offName
+        shortName
+    }
+}
+
+
+query AddressByOffNameAndLiveStatus($offName:String, $liveStatus:String) {
+    addressByOffNameAndLiveStatus(offName:$offName, liveStatus:$liveStatus){
+        id
+        aoId
+        aoGuid
+        offName
+        shortName
+        liveStatus
+    }
+}
+
+
+query FindByShortNameOffNameLiveStatus($shortName:String, $offName:String, $liveStatus:String) {
+    findByShortNameOffNameLiveStatus(shortName:$shortName, offName:$offName, liveStatus:$liveStatus){
+        id
+        aoId
+        aoGuid
+        offName
+        shortName
+        liveStatus
+    }
+}
