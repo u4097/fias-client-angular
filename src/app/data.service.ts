@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
-import {FindByShortNameOffNameLiveStatusGQL} from "./generated/graphql";
+import {FindByRegionGQL, FindByShortOffLiveGQL} from "./generated/graphql";
 import {Address} from "./component/domain/fiasDataTypes";
 import {map} from "rxjs/operators";
 
@@ -13,18 +13,17 @@ export class DataService {
     addresses: Address[];
     public selectedAddresses = [];
 
-    // postUrl = "https://jsonplaceholder.typicode.com/posts";
-
     constructor(
         private http: HttpClient,
-        private addressShortNameOffNameAndLiveStatus: FindByShortNameOffNameLiveStatusGQL
-    ) {
+        private findByRegion:FindByRegionGQL,
+        private findByShortOffLive:FindByShortOffLiveGQL
+) {
     }
 
     getAddress(): Observable<Address[]> {
-        return this.addressShortNameOffNameAndLiveStatus.watch({
-            shortName: "г",
-            offName: "Санкт-Петербург",
+        return this.findByShortOffLive.watch({
+            shortName: "ул",
+            offName: "Кирова",
             liveStatus: "1"
         })
             .valueChanges.pipe(
@@ -37,7 +36,7 @@ export class DataService {
         const filteredAddressList = [];
         for (const address of addresses) {
             for (const selectedAddress of this.selectedAddresses) {
-                if (address.offName === selectedAddress.offName) {
+                if (address.id === selectedAddress.id) {
                     filteredAddressList.push(selectedAddress);
                 }
             }
@@ -45,18 +44,4 @@ export class DataService {
         return filteredAddressList;
     }
 
-    /*
-        filterPosts() {
-            const posts = this.posts;
-            const filteredPostsList = [];
-            for (const post of posts) {
-                for (const selectedPost of this.selectedPosts) {
-                    if (post.title === selectedPost.title) {
-                        filteredPostsList.push(selectedPost);
-                    }
-                }
-            }
-            return filteredPostsList;
-        }
-    */
 }

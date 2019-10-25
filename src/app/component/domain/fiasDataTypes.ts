@@ -5,4 +5,5 @@ export  type Address = {
     offName?: string;
     shortName?: string;
     liveStatus?: string;
+    regionCode?:string;
 }

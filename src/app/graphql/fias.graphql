@@ -41,7 +41,7 @@ query AddressByOffNameAndLiveStatus($offName:String, $liveStatus:String) {
 }
 
 
-query FindByShortNameOffNameLiveStatus($shortName:String, $offName:String, $liveStatus:String) {
+query FindByShortOffLive($shortName:String, $offName:String, $liveStatus:String) {
     findByShortNameOffNameLiveStatus(shortName:$shortName, offName:$offName, liveStatus:$liveStatus){
         id
         aoId
@@ -49,5 +49,19 @@ query FindByShortNameOffNameLiveStatus($shortName:String, $offName:String, $live
         offName
         shortName
         liveStatus
+        regionCode
+    }
+}
+
+
+query FindByRegion($regionCode:String, $shortName:String, $offName:String, $liveStatus:String) {
+    findByRegionCodeAndShortNameAndOffNameAndLiveStatus(regionCode:$regionCode, shortName:$shortName, offName:$offName, liveStatus:$liveStatus){
+        id
+        aoId
+        aoGuid
+        offName
+        shortName
+        liveStatus
+        regionCode
     }
 }

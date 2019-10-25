@@ -4,7 +4,8 @@
 
 <h2 style="text-align: center">Data</h2>
 <div *ngFor="let address of addresses" class="group">
-    <p><b>Item :</b>{{ address.offName }}</p>
-    <p><b>Title :</b>{{ address.shortName }}</p>
-    <p><b>Body :</b>{{ address.aoGuid }}</p>
+    <p><b>Регион : </b>{{ address.regionCode }}</p>
+    <p><b>Название : </b>{{ address.offName }}</p>
+    <p><b>Сокр.назв. : </b>{{ address.shortName }}</p>
+    <p><b>GUID :</b>{{ address.aoGuid }}</p>
 </div>

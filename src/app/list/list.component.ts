@@ -5,8 +5,7 @@ import {
     AddressByGuidGQL,
     AddressByIdGQL,
     AddressByOffNameAndLiveStatusGQL,
-    AddressByOffNameGQL,
-    FindByShortNameOffNameLiveStatusGQL
+    AddressByOffNameGQL, FindByShortOffLiveGQL,
 } from "../generated/graphql";
 import {map} from "rxjs/operators";
 import {Address} from "../component/domain/fiasDataTypes";
@@ -26,7 +25,7 @@ export class ListComponent implements OnInit {
                 private addressByGuid: AddressByGuidGQL,
                 private addressByName: AddressByOffNameGQL,
                 private addressByNameAndLiveStatus: AddressByOffNameAndLiveStatusGQL,
-                private addressShortNameOffNameAndLiveStatus: FindByShortNameOffNameLiveStatusGQL
+                private findByShortOffLiveGQL: FindByShortOffLiveGQL
     ) {
 
     }
@@ -71,7 +70,7 @@ export class ListComponent implements OnInit {
                     });
         */
 
-        this.address = this.addressShortNameOffNameAndLiveStatus.watch({
+        this.address = this.findByShortOffLiveGQL.watch({
             shortName: "г",
             offName: "Санкт-Петербург",
             liveStatus: "1"

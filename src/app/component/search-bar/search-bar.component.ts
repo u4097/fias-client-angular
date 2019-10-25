@@ -2,6 +2,7 @@ import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@a
 import {FormControl} from "@angular/forms";
 import {DataService} from "../../data.service";
 import {Address} from "../domain/fiasDataTypes";
+import {filter, map} from "rxjs/operators";
 
 @Component({
     selector: 'app-search-bar',
@@ -43,6 +44,7 @@ export class SearchBarComponent implements OnInit {
 
         return input ? this.allAddress.filter(s => s.offName.toLowerCase().indexOf(input.toLowerCase()) != -1)
             : this.allAddress;
+
     }
 
 

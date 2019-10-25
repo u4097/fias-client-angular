@@ -22,6 +22,7 @@ export type Address = {
   offName?: Maybe<Scalars['String']>,
   shortName?: Maybe<Scalars['String']>,
   liveStatus?: Maybe<Scalars['String']>,
+  regionCode?: Maybe<Scalars['String']>,
 };
 
 export type Query = {
@@ -31,6 +32,7 @@ export type Query = {
   addressByOffName?: Maybe<Array<Maybe<Address>>>,
   addressByOffNameAndLiveStatus?: Maybe<Array<Maybe<Address>>>,
   findByShortNameOffNameLiveStatus?: Maybe<Array<Maybe<Address>>>,
+  findByRegionCodeAndShortNameAndOffNameAndLiveStatus?: Maybe<Array<Maybe<Address>>>,
 };
 
 
@@ -56,6 +58,14 @@ export type QueryAddressByOffNameAndLiveStatusArgs = {
 
 
 export type QueryFindByShortNameOffNameLiveStatusArgs = {
+  shortName?: Maybe<Scalars['String']>,
+  offName?: Maybe<Scalars['String']>,
+  liveStatus?: Maybe<Scalars['String']>
+};
+
+
+export type QueryFindByRegionCodeAndShortNameAndOffNameAndLiveStatusArgs = {
+  regionCode?: Maybe<Scalars['String']>,
   shortName?: Maybe<Scalars['String']>,
   offName?: Maybe<Scalars['String']>,
   liveStatus?: Maybe<Scalars['String']>
@@ -114,18 +124,34 @@ export type AddressByOffNameAndLiveStatusQuery = (
   )>>> }
 );
 
-export type FindByShortNameOffNameLiveStatusQueryVariables = {
+export type FindByShortOffLiveQueryVariables = {
   shortName?: Maybe<Scalars['String']>,
   offName?: Maybe<Scalars['String']>,
   liveStatus?: Maybe<Scalars['String']>
 };
 
 
-export type FindByShortNameOffNameLiveStatusQuery = (
+export type FindByShortOffLiveQuery = (
   { __typename?: 'Query' }
   & { findByShortNameOffNameLiveStatus: Maybe<Array<Maybe<(
     { __typename?: 'Address' }
-    & Pick<Address, 'id' | 'aoId' | 'aoGuid' | 'offName' | 'shortName' | 'liveStatus'>
+    & Pick<Address, 'id' | 'aoId' | 'aoGuid' | 'offName' | 'shortName' | 'liveStatus' | 'regionCode'>
+  )>>> }
+);
+
+export type FindByRegionQueryVariables = {
+  regionCode?: Maybe<Scalars['String']>,
+  shortName?: Maybe<Scalars['String']>,
+  offName?: Maybe<Scalars['String']>,
+  liveStatus?: Maybe<Scalars['String']>
+};
+
+
+export type FindByRegionQuery = (
+  { __typename?: 'Query' }
+  & { findByRegionCodeAndShortNameAndOffNameAndLiveStatus: Maybe<Array<Maybe<(
+    { __typename?: 'Address' }
+    & Pick<Address, 'id' | 'aoId' | 'aoGuid' | 'offName' | 'shortName' | 'liveStatus' | 'regionCode'>
   )>>> }
 );
 
@@ -207,8 +233,8 @@ export const AddressByOffNameAndLiveStatusDocument = gql`
     document = AddressByOffNameAndLiveStatusDocument;
     
   }
-export const FindByShortNameOffNameLiveStatusDocument = gql`
-    query FindByShortNameOffNameLiveStatus($shortName: String, $offName: String, $liveStatus: String) {
+export const FindByShortOffLiveDocument = gql`
+    query FindByShortOffLive($shortName: String, $offName: String, $liveStatus: String) {
   findByShortNameOffNameLiveStatus(shortName: $shortName, offName: $offName, liveStatus: $liveStatus) {
     id
     aoId
@@ -216,6 +242,7 @@ export const FindByShortNameOffNameLiveStatusDocument = gql`
     offName
     shortName
     liveStatus
+    regionCode
   }
 }
     `;
@@ -223,7 +250,28 @@ export const FindByShortNameOffNameLiveStatusDocument = gql`
   @Injectable({
     providedIn: 'root'
   })
-  export class FindByShortNameOffNameLiveStatusGQL extends Apollo.Query<FindByShortNameOffNameLiveStatusQuery, FindByShortNameOffNameLiveStatusQueryVariables> {
-    document = FindByShortNameOffNameLiveStatusDocument;
+  export class FindByShortOffLiveGQL extends Apollo.Query<FindByShortOffLiveQuery, FindByShortOffLiveQueryVariables> {
+    document = FindByShortOffLiveDocument;
+    
+  }
+export const FindByRegionDocument = gql`
+    query FindByRegion($regionCode: String, $shortName: String, $offName: String, $liveStatus: String) {
+  findByRegionCodeAndShortNameAndOffNameAndLiveStatus(regionCode: $regionCode, shortName: $shortName, offName: $offName, liveStatus: $liveStatus) {
+    id
+    aoId
+    aoGuid
+    offName
+    shortName
+    liveStatus
+    regionCode
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class FindByRegionGQL extends Apollo.Query<FindByRegionQuery, FindByRegionQueryVariables> {
+    document = FindByRegionDocument;
     
   }
