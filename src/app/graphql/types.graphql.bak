@@ -1,0 +1,24 @@
+query UserById($id:ID!)  {
+	user(id:$id){
+	  id
+	  firstname
+	  age
+	}
+}
+
+query PostById($id:ID!)
+{
+	post(id:$id){
+		id
+		user
+		{
+			id
+			firstname
+			age
+		}
+        comments {
+			id
+			text
+		}
+	}
+}

@@ -1,0 +1,9 @@
+<div *ngFor="let addr of  address | async ">
+  <div class="card" style="width: 100%; margin-top: 10px">
+    <div class="card-body">
+      <h5 class="card-title">{{addr.name}}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">by {{addr.type}}</h6>
+      <p class="card-text">{{addr.level}}</p>
+    </div>
+  </div>
+</div>

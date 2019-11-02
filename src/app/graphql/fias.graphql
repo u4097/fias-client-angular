@@ -1,0 +1,9 @@
+query addressByName($name:String) {
+    addressByName(name:$name){
+        recordId
+        regionCode
+        level
+        name
+        type
+    }
+}

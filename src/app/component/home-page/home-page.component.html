@@ -1,0 +1,10 @@
+<div style="margin: auto; width: 70%; margin-top: 30%;">
+    <app-search-bar (onSelectedOption)="onSelectedPost()"></app-search-bar>
+</div>
+
+<div *ngFor="let address of addresses" class="group">
+    <p><b>Регион : </b>{{ address.regionCode }}</p>
+    <p><b>Сокр.назв. : </b>{{ address.type }}</p>
+    <p><b>Название : </b>{{ address.name }}</p>
+    <p><b>Уровень адр.объекта : </b>{{ address.level }}</p>
+</div>
